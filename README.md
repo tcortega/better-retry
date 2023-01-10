@@ -31,8 +31,7 @@ You can read docs [here](./docs/README.md).
 # 🔍 Usage
 
 ```ts
-import { betterRetry } from 'better-retry';
-import { FailedAttemptError } from "./types";
+import { betterRetry, FailedAttemptError } from 'better-retry';
 
 const run = async (attempt: number) => {
   if (attempt > 5) return 'Success!';
