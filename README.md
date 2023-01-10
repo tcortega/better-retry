@@ -1,56 +1,51 @@
-typescript library template
+better-retry
 ===========================
 
-Your library description
+A better way to handle retries on promise-returning/async functions, with ESM and CommonJS support.   
+It is basically [p-retry](https://github.com/sindresorhus/p-retry) rewritten in Typescript with Commonjs support.
 
 # 🎉 Features
 
-Add your library features here.
+* Exponential backoff
+* Custom retry strategy support
+* Timeout settings
 
-📦 This template already has (out of the box):
+# 📝 To-do
 
-* preconfigured rollup build (for amd, umd, esnext and commonjs)
-* preconfigured jest (with ts-jest) for testing your library
-* preconfigured benchmarks with benchmark.js
-* azure dev-ops configuration
-* travis-ci configuration, just add your repo to travis and you have done
-* codecov setup
-* tsconfig.json configurated for node.js libraries
-* eslint/prettier you have eslint/prettier preconfigured, your code will be linted at commit time automatically
-* github issue templates, they are already there, just configure them
-* contributing guidelines and code of conduct are already setupped
-* size-limit script, for checking the weight of your library
-* automatic docs generation with [typedoc](https://github.com/TypeStrong/typedoc)
-* automatic changelog generation with standard-changelog
+* Add custom abort signal handlers
 
 # ⚙ Install
 
 ```bash
 # npm
-npm i mylib
+npm i better-retry
 
 # yarn
-yarn add mylib
+yarn add better-retry
 ```
 
 # 📖 Docs
 
-You can read docs [here](./docs/README.md), just remember to run your `npm run docs` script.
+You can read docs [here](./docs/README.md).
 
 # 🔍 Usage
 
-Put my library usage guide here
+```ts
+import { betterRetry } from 'better-retry';
+import { FailedAttemptError } from "./types";
 
-Predefined scripts:
+const run = async (attempt: number) => {
+  if (attempt > 5) return 'Success!';
 
-- benchmarks: runs all your benchmarks
-- changelog: creates a changelog (using standard-changelog)
-- docs: creates docs from your jsdocs
-- lint: lints your code
-- prepublishOnly: builds your sources for deployment (to npm)
-- size-limit: checks your bundle size limit
-- test: run tests 
-- upgrade-interactive: updgrades your dependencies interactively (like with yarn)
+  throw new Error('Failed');
+};
+
+const onError = (error: FailedAttemptError) => {
+  console.log(`Attempt ${error.attempt} failed. There are ${error.retriesLeft} retries left.`);
+}
+
+console.log(await betterRetry(run), { retries: 5, onFailedAttempt: onError }); // Success!
+```
 
 # ️❤️ Contributing
 
