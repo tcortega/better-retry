@@ -1,7 +1,7 @@
 better-retry
 ===========================
 
-A better way to handle retries on promise-returning/async functions, with ESM and CommonJS support.   
+A better way to handle retries on promise-returning/async functions, with ESM, CJS, AMD and UMD support.   
 It is basically [p-retry](https://github.com/sindresorhus/p-retry) rewritten in Typescript with Commonjs support.
 
 # 🎉 Features
@@ -31,8 +31,7 @@ You can read docs [here](./docs/README.md).
 # 🔍 Usage
 
 ```ts
-import { betterRetry } from 'better-retry';
-import { FailedAttemptError } from "./types";
+import { betterRetry, FailedAttemptError } from 'better-retry';
 
 const run = async (attempt: number) => {
   if (attempt > 5) return 'Success!';
